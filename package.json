@@ -1,0 +1,27 @@
+{
+  "name": "inextrack-root",
+  "version": "1.0.0",
+  "description": "Income and Expense Tracking Application",
+  "main": "index.js",
+  "scripts": {
+    "install-all": "cd server && npm install && cd ../client && npm install",
+    "dev": "concurrently \"cd server && npm run dev\" \"cd client && npm run dev\"",
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm run dev",
+    "build": "cd client && npm run build"
+  },
+  "keywords": [
+    "expense",
+    "income",
+    "tracking",
+    "finance"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "date-fns-tz": "^3.2.0"
+  }
+}
