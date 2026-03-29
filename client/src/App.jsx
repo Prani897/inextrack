@@ -11,6 +11,7 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Transactions from './pages/Transactions';
 import Analytics from './pages/Analytics';
+import SMSImport from './pages/SMSImport';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
               <Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
               <Route path="/transactions" element={<PrivateRoute><Transactions /></PrivateRoute>} />
               <Route path="/analytics" element={<PrivateRoute><Analytics /></PrivateRoute>} />
+              <Route path="/import-sms" element={<PrivateRoute><SMSImport /></PrivateRoute>} />
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
             <ToastContainer position="top-right" autoClose={3000} />

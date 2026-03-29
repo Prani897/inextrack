@@ -94,6 +94,10 @@
   margin-bottom: 20px;
 }
 
+.recent-transactions .card-header {
+  margin-bottom: 20px;
+}
+
 .recent-transactions h2 {
   color: var(--text-dark);
   font-size: 24px;
