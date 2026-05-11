@@ -21,6 +21,23 @@ const userSchema = new mongoose.Schema({
     minlength: 6,
     select: false
   },
+  // Collaborators that have access to this user's transactions
+  collaborators: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    }
+  ],
+  // Groups/households the user is part of
+  groups: [
+    {
+      _id: mongoose.Schema.Types.ObjectId,
+      name: String,
+      members: [mongoose.Schema.Types.ObjectId],
+      createdBy: mongoose.Schema.Types.ObjectId,
+      createdAt: Date
+    }
+  ],
   createdAt: {
     type: Date,
     default: Date.now

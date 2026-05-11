@@ -159,6 +159,29 @@
   font-size: 24px;
 }
 
+.modal-header-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.btn-receipt {
+  padding: 8px 16px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.3s ease;
+  white-space: nowrap;
+}
+
+.btn-receipt:hover {
+  background: #45a049;
+}
+
 .modal-close {
   background: none;
   border: none;

@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, useCallback } from 'react';
+import React, { createContext, useState, useContext, useCallback, useEffect } from 'react';
 import { transactionAPI, analyticsAPI } from '../api/api';
 import { toast } from 'react-toastify';
 
@@ -16,6 +16,7 @@ export const TransactionProvider = ({ children }) => {
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [summary, setSummary] = useState(null);
+  const [cumulativeSummary, setCumulativeSummary] = useState(null);
 
   const fetchTransactions = useCallback(async (filters = {}) => {
     setLoading(true);
@@ -32,9 +33,14 @@ export const TransactionProvider = ({ children }) => {
 
   const fetchSummary = useCallback(async (period = null) => {
     try {
+      // Fetch period-specific summary
       const params = period ? { period } : {};
       const response = await analyticsAPI.getSummary(params);
       setSummary(response.data.data);
+
+      // Always fetch cumulative/all-time summary
+      const cumulativeResponse = await analyticsAPI.getSummary({});
+      setCumulativeSummary(cumulativeResponse.data.data);
     } catch (error) {
       console.error('Fetch summary error:', error);
     }
@@ -88,6 +94,7 @@ export const TransactionProvider = ({ children }) => {
     transactions,
     loading,
     summary,
+    cumulativeSummary,
     fetchTransactions,
     fetchSummary,
     addTransaction,

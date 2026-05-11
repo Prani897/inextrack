@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useTransaction } from '../context/TransactionContext';
 import { formatInTimeZone } from 'date-fns-tz';
 import { format } from 'date-fns';
+import ReceiptUploader from '../components/ReceiptUploader';
 import './Transactions.css';
 
 const Transactions = () => {
@@ -15,6 +16,7 @@ const Transactions = () => {
   } = useTransaction();
 
   const [showModal, setShowModal] = useState(false);
+  const [showReceiptUploader, setShowReceiptUploader] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState(null);
   const [filter, setFilter] = useState({ type: 'all', category: '' });
   const [formData, setFormData] = useState({
@@ -92,6 +94,17 @@ const Transactions = () => {
       date: format(new Date(), 'yyyy-MM-dd')
     });
     setEditingTransaction(null);
+  };
+
+  const handleExtractedData = (extractedData) => {
+    setFormData({
+      ...formData,
+      amount: extractedData.amount?.toString() || '',
+      category: extractedData.category || formData.category,
+      description: extractedData.vendor || formData.description,
+      date: extractedData.date || formData.date
+    });
+    setShowReceiptUploader(false);
   };
 
   const filteredTransactions = transactions.filter((t) => {
@@ -216,7 +229,17 @@ const Transactions = () => {
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
               <h2>{editingTransaction ? 'Edit Transaction' : 'Add Transaction'}</h2>
-              <button className="modal-close" onClick={() => setShowModal(false)}>×</button>
+              <div className="modal-header-actions">
+                <button 
+                  type="button"
+                  className="btn-receipt"
+                  onClick={() => setShowReceiptUploader(true)}
+                  title="Parse receipt image"
+                >
+                  📸 Parse Receipt
+                </button>
+                <button className="modal-close" onClick={() => setShowModal(false)}>×</button>
+              </div>
             </div>
 
             <form onSubmit={handleSubmit} className="transaction-form">
@@ -314,6 +337,13 @@ const Transactions = () => {
             </form>
           </div>
         </div>
+      )}
+
+      {showReceiptUploader && (
+        <ReceiptUploader
+          onExtractedData={handleExtractedData}
+          onClose={() => setShowReceiptUploader(false)}
+        />
       )}
     </div>
   );

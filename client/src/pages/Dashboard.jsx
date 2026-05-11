@@ -4,7 +4,7 @@ import { format } from 'date-fns';
 import './Dashboard.css';
 
 const Dashboard = () => {
-  const { transactions, fetchTransactions, fetchSummary, summary, loading } = useTransaction();
+  const { transactions, fetchTransactions, fetchSummary, summary, cumulativeSummary, loading } = useTransaction();
   const [period, setPeriod] = useState('monthly');
 
   useEffect(() => {
@@ -47,7 +47,8 @@ const Dashboard = () => {
             <div className="card-icon">📈</div>
             <div className="card-content">
               <h3>Total Income</h3>
-              <p className="amount">{formatCurrency(summary.totalIncome)}</p>
+              <p className="amount">{formatCurrency(cumulativeSummary?.totalIncome || 0)}</p>
+              <p className="period-label">All Time</p>
             </div>
           </div>
 
@@ -55,7 +56,8 @@ const Dashboard = () => {
             <div className="card-icon">📉</div>
             <div className="card-content">
               <h3>Total Expense</h3>
-              <p className="amount">{formatCurrency(summary.totalExpense)}</p>
+              <p className="amount">{formatCurrency(summary?.totalExpense || 0)}</p>
+              <p className="period-label">This Period</p>
             </div>
           </div>
 
@@ -63,7 +65,8 @@ const Dashboard = () => {
             <div className="card-icon">💰</div>
             <div className="card-content">
               <h3>Balance</h3>
-              <p className="amount">{formatCurrency(summary.balance)}</p>
+              <p className="amount">{formatCurrency(cumulativeSummary?.balance || 0)}</p>
+              <p className="period-label">All Time</p>
             </div>
           </div>
 
@@ -71,7 +74,8 @@ const Dashboard = () => {
             <div className="card-icon">📊</div>
             <div className="card-content">
               <h3>Transactions</h3>
-              <p className="amount">{summary.transactionCount}</p>
+              <p className="amount">{summary?.transactionCount || 0}</p>
+              <p className="period-label">This Period</p>
             </div>
           </div>
         </div>

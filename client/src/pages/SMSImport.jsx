@@ -94,11 +94,11 @@ const SMSImport = () => {
           placeholder="Paste SMS here. You can paste multiple SMS separated by blank lines or dashes.
 
 Example:
-Your A/C XXXX2345 debited for ₹500 at Amazon. Bal: ₹10,500. Date: 15/03/2024
+Your A/C XXXX2345 debited for $500 at Amazon. Bal: $10,500. Date: 15/03/2024
 
 ---
 
-Your A/C XXXX2345 debited for ₹200 at Zomato. Bal: ₹10,300. Date: 15/03/2024"
+Your A/C XXXX2345 debited for $200 at Zomato. Bal: $10,300. Date: 15/03/2024"
           className="sms-textarea"
         />
         <button

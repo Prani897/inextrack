@@ -90,6 +90,15 @@
   color: var(--text-dark);
 }
 
+.card-content .period-label {
+  font-size: 11px;
+  color: var(--text-light);
+  font-weight: 500;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
 .recent-transactions .card-header {
   margin-bottom: 20px;
 }

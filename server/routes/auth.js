@@ -66,18 +66,28 @@ router.post('/login', [
     }
 
     const { email, password } = req.body;
+    console.log('🔐 Login attempt for email:', email);
 
     // Find user and include password
     const user = await User.findOne({ email }).select('+password');
     if (!user) {
+      console.log('❌ User not found:', email);
       return res.status(401).json({ success: false, message: 'Invalid credentials' });
     }
+
+    console.log('✅ User found:', user.email);
 
     // Check password
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
+      console.log('❌ Password mismatch for user:', email);
       return res.status(401).json({ success: false, message: 'Invalid credentials' });
     }
+
+    console.log('✅ Password matched');
+    
+    const token = generateToken(user._id);
+    console.log('✅ Token generated successfully');
 
     res.json({
       success: true,
@@ -85,12 +95,17 @@ router.post('/login', [
         id: user._id,
         name: user.name,
         email: user.email,
-        token: generateToken(user._id)
+        token: token
       }
     });
   } catch (error) {
-    console.error('Login error:', error);
-    res.status(500).json({ success: false, message: 'Server error' });
+    console.error('❌ Login error:', error.message);
+    console.error('Error stack:', error.stack);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Server error',
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
   }
 });
 

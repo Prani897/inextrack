@@ -153,11 +153,12 @@ router.delete('/:id', async (req, res) => {
       return res.status(404).json({ success: false, message: 'Transaction not found' });
     }
 
-    await Transaction.findByIdAndDelete(req.params.id);
+    const deletedTransaction = await Transaction.findByIdAndDelete(req.params.id);
 
     res.json({
       success: true,
-      message: 'Transaction deleted'
+      message: 'Transaction deleted',
+      data: deletedTransaction
     });
   } catch (error) {
     console.error('Delete transaction error:', error);

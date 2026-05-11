@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || (typeof window !== 'undefined' && window.location.origin ? `${window.location.origin}/api` : '/api');
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
 // Create axios instance
 const api = axios.create({
@@ -45,6 +45,28 @@ export const analyticsAPI = {
   getSummary: (params) => api.get('/analytics/summary', { params }),
   getByCategory: (params) => api.get('/analytics/category', { params }),
   getTrend: (params) => api.get('/analytics/trend', { params })
+};
+
+// Receipt API
+export const receiptAPI = {
+  parseReceipt: (file) => {
+    const formData = new FormData();
+    formData.append('receipt', file);
+    return api.post('/receipts/parse', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+  },
+  parseWithOCR: (file) => {
+    const formData = new FormData();
+    formData.append('receipt', file);
+    return api.post('/receipts/parse-with-ocr', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+  }
 };
 
 export default api;
